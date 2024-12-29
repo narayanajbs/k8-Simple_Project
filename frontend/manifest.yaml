@@ -120,11 +120,20 @@ spec:
       containers:
       - name: frontend
         image: joindevops/frontend:v1.0
+        imagePullPolicy: Always
         volumeMounts:
         - name: nginx-conf
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
         # envFrom:
         # - configMapRef:
         #     name: frontend
@@ -150,5 +159,5 @@ spec:
     tier: web
   ports:
   - protocol: TCP
-    port: 80 #service-port
+    port: 8080 #service-port
     targetPort: 8080 #target-port
